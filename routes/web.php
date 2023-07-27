@@ -27,7 +27,6 @@ Route::get('post/{post}', function ($slug) {
     }
 
     $post = Cache::remember("posts.{$slug}", 5, function () use($path) {
-        var_dump("file_get_contents");
         return file_get_contents($path);
     }); // caches the file. Thus file_get_contents is only called after the expiry of the cache(5 seconds here)
 
