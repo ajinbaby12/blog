@@ -24,6 +24,7 @@ Route::get('post/{post}', function ($slug) {
 
     if (! file_exists($path)){
         return redirect('/');
+        // Test
     }
 
     $post = Cache::remember("posts.{$slug}", 5, function () use($path) {
