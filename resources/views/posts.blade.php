@@ -12,7 +12,7 @@
 
 <body>
     <article>
-        <h1><a href="">My First Blog Post</a></h1>
+        <h1><a href="/post/my-first-post">My First Blog Post</a></h1>
 
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -24,7 +24,7 @@
     </article>
 
     <article>
-        <h1><a href="">My First Blog Post</a></h1>
+        <h1><a href="/post/my-second-post">My Second Blog Post</a></h1>
 
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -36,7 +36,7 @@
     </article>
 
     <article>
-        <h1><a href="">My First Blog Post</a></h1>
+        <h1><a href="/post/my-third-post">My Third Blog Post</a></h1>
 
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
