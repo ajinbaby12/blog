@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,12 @@ Route::get('post/{post}', function ($slug) {
         return redirect('/');
     }
 
-    $post = file_get_contents($path);
+    $post = Cache::remember("posts.{$slug}", 5, function () use($path) {
+        var_dump("file_get_contents");
+        return file_get_contents($path);
+    }); // caches the file. Thus file_get_contents is only called after the expiry of the cache(5 seconds here)
+
+     // this function is expensive and is called each time a user accesses the post.
 
     return view('post', [
         'post' => $post
