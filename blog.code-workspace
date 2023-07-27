@@ -3,8 +3,5 @@
 		{
 			"path": "."
 		}
-	],
-	"settings": {
-		"php.version": "v8.2.4"
-	}
+	]
 }
