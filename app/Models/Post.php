@@ -5,7 +5,6 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Cache;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -53,6 +52,9 @@ class Post
 
     public static function find($slug)
     { // finds the blog post with matching slug
+        if(! file_exists(resource_path("posts/{$slug}.html"))){
+            throw new ModelNotFoundException();
+        }
         return static::all()->firstWhere('slug', $slug);
     }
 }
