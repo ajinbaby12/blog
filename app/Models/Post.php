@@ -31,26 +31,29 @@ class Post
     }
 
     public static function all()
-    { // finds all the blog posts
-        return collect(File::files(resource_path("posts")))
-            ->map(fn($file) => YamlFrontMatter::parseFile($file))
-            ->map(fn($document) =>
-                new Post(
-                    $document->title,
-                    $document->excerpt,
-                    $document->date,
-                    $document->slug,
-                    $document->body()
+    { // finds all the blog posts sorted by their date
+        return cache()->rememberForever('posts.all', function () {
+            return collect(File::files(resource_path("posts")))
+                ->map(fn($file) => YamlFrontMatter::parseFile($file))
+                ->map(
+                    fn($document) =>
+                    new Post(
+                        $document->title,
+                        $document->excerpt,
+                        $document->date,
+                        $document->slug,
+                        $document->body()
+                    )
                 )
-            );
+                ->sortByDesc('date');
+        });
+        // returns a collection of Post objects
     }
-    // returns a collection of Post objects
+
 
     public static function find($slug)
     { // finds the blog post with matching slug
-        $posts = static::all();
-
-        return $posts->firstWhere('slug', $slug);
+        return static::all()->firstWhere('slug', $slug);
     }
 }
 

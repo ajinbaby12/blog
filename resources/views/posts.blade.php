@@ -21,7 +21,7 @@
             @endphp
         </a></h1>
         @php
-            echo $post->body;
+            echo $post->excerpt;
         @endphp
 
     </article>
