@@ -12,14 +12,10 @@
 
 <body>
     <article>
-        <h1>@php
-            echo $post->title;
-        @endphp</h1>
+        <h1>{{$post->title}}</h1>
 
         <p>
-            @php
-                echo $post->body;
-            @endphp
+            {!!$post->body!!} {{-- $post->body contains <p> tag which will be escaped if double curly braces is used --}}
         </p>
     </article>
 
