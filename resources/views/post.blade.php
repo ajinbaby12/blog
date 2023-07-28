@@ -12,9 +12,15 @@
 
 <body>
     <article>
-        @php
-            echo $post;
-        @endphp
+        <h1>@php
+            echo $post->title;
+        @endphp</h1>
+
+        <p>
+            @php
+                echo $post->body;
+            @endphp
+        </p>
     </article>
 
     <a href="/">Go back</a>

@@ -4,32 +4,53 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cache;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Post
 {
-    public static function all()
+    public $title;
+
+    public $excerpt;
+
+    public $date;
+
+    public $slug;
+
+    public $body;
+
+    public function __construct($title, $excerpt, $date, $slug, $body)
     {
-        $files = File::files(resource_path("posts"));
-        return array_map(function ($file) {
-            return $file->getContents();
-        }, $files);
+        $this->title = $title;
+        $this->excerpt = $excerpt;
+        $this->date = $date;
+        $this->slug = $slug;
+        $this->body = $body;
     }
 
+    public static function all()
+    { // finds all the blog posts
+        return collect(File::files(resource_path("posts")))
+            ->map(fn($file) => YamlFrontMatter::parseFile($file))
+            ->map(fn($document) =>
+                new Post(
+                    $document->title,
+                    $document->excerpt,
+                    $document->date,
+                    $document->slug,
+                    $document->body()
+                )
+            );
+    }
+    // returns a collection of Post objects
+
     public static function find($slug)
-    {
+    { // finds the blog post with matching slug
+        $posts = static::all();
 
-        if (!file_exists($path = resource_path("posts/{$slug}.html"))) {
-            throw new ModelNotFoundException();
-        }
-
-        $post = Cache::remember("posts.{$slug}", 5, function () use ($path) {
-            return file_get_contents($path); // this function is expensive and is called each time a user accesses the post.
-        }); // caches the file. Thus file_get_contents is only called after the expiry of the cache(5 seconds here)
-
-        return $post;
+        return $posts->firstWhere('slug', $slug);
     }
 }
 

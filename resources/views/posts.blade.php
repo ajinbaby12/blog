@@ -13,7 +13,17 @@
 <body>
     <?php foreach($posts as $post): ?>
     <article>
-        <?= $post; ?>
+        <h1><a href="/post/@php
+                echo $post->slug;
+            @endphp">
+            @php
+                echo $post->title;
+            @endphp
+        </a></h1>
+        @php
+            echo $post->body;
+        @endphp
+
     </article>
     <?php endforeach; ?>
 </body>

@@ -15,16 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    $posts = Post::all();
     return view('posts', [
-        'posts' => $posts
+        'posts' => Post::all()
     ]);
 });
 
 Route::get('post/{post}', function ($slug) {
-    // find a post by it's slug and return it's view
     return view('post', [
-        'post' => Post::find($slug)
+        'post' => Post::find($slug) // returns the content of the file by it's slug
     ]);
 
 })->where('post', '[a-zA-Z_\-]+');
