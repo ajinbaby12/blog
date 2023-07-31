@@ -36,12 +36,12 @@ Route::get('post/{post:slug}', function (Post $post) {
 
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts', [
-        'posts' => $category->posts
+        'posts' => $category->posts->sortByDesc('created_at')
     ]);
 });
 
-Route::get('user/{user}', function (User $user) {
+Route::get('authors/{author}', function (User $author) {
     return view('posts', [
-        'posts' => $user->posts
+        'posts' => $author->posts->sortByDesc('created_at')
     ]);
 });
