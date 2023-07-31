@@ -22,7 +22,8 @@ Route::get('/', function () {
     // });
     return view('posts', [
         // 'posts' => Post::all() // N+1 problem arises here
-        'posts' => Post::with('category', 'user')->get()
+        'posts' => Post::latest()->with('category', 'author')->get()
+        // latest() orders the Post by it's created_at column
         // Load all posts and all the categories that are referenced by posts.
     ]);
 });
@@ -31,7 +32,6 @@ Route::get('post/{post:slug}', function (Post $post) {
     return view('post', [
         'post' => $post
     ]);
-
 });
 
 Route::get('categories/{category:slug}', function (Category $category) {
