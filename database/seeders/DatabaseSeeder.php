@@ -23,8 +23,15 @@ class DatabaseSeeder extends Seeder
         Category::truncate();
         User::truncate();
         Schema::enableForeignKeyConstraints();
+        // truncating is used to remove existing data when 'db:seed' is called alone. Otherwise the table is populated with unnecessary data. Can remove the above lines if seeding is only used during a fresh migration.
 
-        Post::factory(3)->create();
+        $user = User::factory()->create([
+            'name' => 'Ajin Baby'
+        ]); // create a random User but name should be Ajin Baby
+
+        Post::factory(5)->create([
+            'user_id' => $user->id
+        ]); // create 5 random Posts but the user_id of each post should be the id of the user Ajin Baby
 
         // $user = User::factory()->create();
 
