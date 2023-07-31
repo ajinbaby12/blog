@@ -21,8 +21,8 @@ Route::get('/', function () {
     // });
     return view('posts', [
         // 'posts' => Post::all() // N+1 problem arises here
-        'posts' => Post::with('category')->get()
-        // Load all posts and all the categories that are referenced by posts. 
+        'posts' => Post::with(['category', 'user'])->get()
+        // Load all posts and all the categories that are referenced by posts.
     ]);
 });
 
