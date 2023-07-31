@@ -1,6 +1,9 @@
 <x-layout>
     <article>
         <h1>{{$post->title}}</h1>
+        <p>
+            <a href="#">{{$post->category->name}}</a>
+        </p>
 
         {!!$post->body!!} {{-- $post->body contains <p> tag which will be escaped if double curly braces is used --}}
     </article>
