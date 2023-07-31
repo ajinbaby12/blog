@@ -20,9 +20,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('post/{post}', function ($id) {
+Route::get('post/{post:slug}', function (Post $post) {
     return view('post', [
-        'post' => Post::find($id) // returns the content of the file by it's slug
+        'post' => $post
     ]);
 
-})->whereNumber('post');
+});
