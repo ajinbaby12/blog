@@ -20,7 +20,9 @@ Route::get('/', function () {
     //     logger($query->sql, $query->bindings);
     // });
     return view('posts', [
-        'posts' => Post::all()
+        // 'posts' => Post::all() // N+1 problem arises here
+        'posts' => Post::with('category')->get()
+        // Load all posts and all the categories that are referenced by posts. 
     ]);
 });
 
