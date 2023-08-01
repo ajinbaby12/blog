@@ -1,9 +1,10 @@
 <?php
 
 use App\Models\Post;
-use App\Models\Category;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,24 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    // \Illuminate\Support\Facades\DB::listen(function ($query) {
-    //     logger($query->sql, $query->bindings);
-    // });
-    $posts = Post::latest()->with('category', 'author');
-    // latest() orders the Post by it's created_at column
-    // Load all posts and all the categories and authors that are referenced by posts.
-    if (request('search')) { // if user has searched something
-        $posts
-            ->where('title', 'like', '%' . request('search') . '%')
-            ->orWhere('body', 'like', '%' . request('search') . '%');
-    }
-    return view('posts', [
-        // 'posts' => Post::all() // N+1 problem arises here
-        'posts' => $posts->get(),
-        'categories' => Category::all()
-    ]);
-});
+Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('posts/{post:slug}', function (Post $post) {
     return view('post', [
