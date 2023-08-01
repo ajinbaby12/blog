@@ -12,7 +12,7 @@
                 <option value="category" disabled selected>Category
                 </option>
                 @foreach ($categories as $category)
-                <option value="/categories/{{$category->slug}}">{{$category->name}}</option>
+                <option value="?category={{$category->slug}}">{{$category->name}}</option>
                 @endforeach
             </select>
 

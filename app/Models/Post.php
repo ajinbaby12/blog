@@ -28,6 +28,17 @@ class Post extends Model
         //         ->where('title', 'like', '%' . $filters['search'] . '%')
         //         ->orWhere('body', 'like', '%' . $filters['search'] . '%');
         // }
+
+        $query->when($filters['category'] ?? false, function ($query, $category) {
+            $query
+                ->whereExists(
+                    fn($query) =>
+                    $query
+                        ->from('categories')
+                        ->whereColumn('categories.id', 'posts.category_id')
+                        ->where('categories.slug', $category)
+                );
+        });
     }
 
     public function category(): BelongsTo // Laravel assumes that the foreign key is called category_id which is deduced from the function name

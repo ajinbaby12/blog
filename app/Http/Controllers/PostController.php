@@ -15,7 +15,7 @@ class PostController extends Controller
         // });
         return view('posts', [
             // 'posts' => Post::all() // N+1 problem arises here
-            'posts' => Post::latest()->with('category', 'author')->filter(request(['search']))->get(),
+            'posts' => Post::latest()->with('category', 'author')->filter(request(['search', 'category']))->get(),
             // latest() orders the Post by it's created_at column
             // Load all posts and all the categories and authors that are referenced by posts.
             // request('search') returns a string of what is searched. request(['search]) returns an array with key 'search' and value of what is searched

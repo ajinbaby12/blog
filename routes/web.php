@@ -25,12 +25,14 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 // });
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('categories/{category:slug}', function (Category $category) {
-    return view('posts', [
-        'posts' => $category->posts->sortByDesc('created_at')->load('category', 'author'),
-        'categories' => Category::all()
-    ]);
-});
+// Route::get('categories/{category:slug}', function (Category $category) {
+//     return view('posts', [
+//         'posts' => $category->posts->sortByDesc('created_at')->load('category', 'author'),
+//         'categories' => Category::all()
+//     ]);
+// });
+// Using uri query to find posts of a particular category. The route method also works. Query method is another way to do the same process.
+// Check the filter method of PostController
 
 Route::get('authors/{author:username}', function (User $author) {
     return view('posts', [
