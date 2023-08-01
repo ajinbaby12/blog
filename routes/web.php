@@ -31,8 +31,8 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 //         'categories' => Category::all()
 //     ]);
 // });
-// Using uri query to find posts of a particular category. The route method also works. Query method is another way to do the same process.
 // Check the filter method of PostController
+// We are using uri query there to find posts of a particular category. The route method (commented route above) also works. Query method is another way to do the same process.
 
 Route::get('authors/{author:username}', function (User $author) {
     return view('posts', [
