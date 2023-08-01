@@ -34,8 +34,9 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 // Check the filter method of PostController
 // We are using uri query there to find posts of a particular category. The route method (commented route above) also works. Query method is another way to do the same process.
 
-Route::get('authors/{author:username}', function (User $author) {
-    return view('posts', [
-        'posts' => $author->posts->sortByDesc('created_at')->load('category', 'author')
-    ]);
-});
+// Route::get('authors/{author:username}', function (User $author) {
+//     return view('posts', [
+//         'posts' => $author->posts->sortByDesc('created_at')->load('category', 'author')
+//     ]);
+// });
+// This route functionality was also replaced by filter method in the Post controller
