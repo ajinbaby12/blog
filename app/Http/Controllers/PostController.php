@@ -20,7 +20,8 @@ class PostController extends Controller
             // latest() orders the Post by it's created_at column
             // Load all posts and all the categories and authors that are referenced by posts.
             // request('search') returns a string of what is searched. request(['search]) returns an array with key 'search' and value of what is searched
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'currentCategory' => Category::firstWhere('slug', request('category')) // firstWhere() is same as calling first() after where()
         ]);
     }
 
