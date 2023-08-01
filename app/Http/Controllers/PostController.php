@@ -16,15 +16,18 @@ class PostController extends Controller
         $posts = Post::latest()->with('category', 'author');
         // latest() orders the Post by it's created_at column
         // Load all posts and all the categories and authors that are referenced by posts.
-        if (request('search')) { // if user has searched something
-            $posts
-                ->where('title', 'like', '%' . request('search') . '%')
-                ->orWhere('body', 'like', '%' . request('search') . '%');
-        }
+        $posts->filter(request(['search'])); // request('search') returns a string of what is searched. request(['search]) returns an array with key 'search' and value of what is searched
         return view('posts', [
             // 'posts' => Post::all() // N+1 problem arises here
             'posts' => $posts->get(),
             'categories' => Category::all()
+        ]);
+    }
+
+    public function show(Post $post)
+    {
+        return view('post', [
+            'post' => $post
         ]);
     }
 }

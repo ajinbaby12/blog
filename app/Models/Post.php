@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,22 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function scopeFilter(Builder $query, array $filters): void // in the future when posts needs to be filtered using any other keys, the $filter array can be used
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search) { // only execute callback function if the condition/when is true
+            $query
+            ->where('title', 'like', '%' . $search . '%')
+            ->orWhere('body', 'like', '%' . $search . '%');
+        }); // can rewrite this using an arrow function
+
+        // above code is equivalent to this
+        // if ($filters['search'] ?? false) {
+        //     $query
+        //         ->where('title', 'like', '%' . $filters['search'] . '%')
+        //         ->orWhere('body', 'like', '%' . $filters['search'] . '%');
+        // }
+    }
 
     public function category(): BelongsTo // Laravel assumes that the foreign key is called category_id which is deduced from the function name
     {
