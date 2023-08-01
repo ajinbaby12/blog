@@ -16,11 +16,11 @@ class Post extends Model
 
     public function scopeFilter(Builder $query, array $filters): void // in the future when posts needs to be filtered using any other keys, the $filters array can be used
     {
-        $query->when($filters['search'] ?? false, function ($query, $search) { // only execute callback function if the condition/when is true
+        $query->when($filters['search'] ?? false, fn($query, $search) => // only execute callback function if the condition/when is true
             $query
-            ->where('title', 'like', '%' . $search . '%')
-            ->orWhere('body', 'like', '%' . $search . '%');
-        }); // can rewrite this using an arrow function
+                ->where('title', 'like', '%' . $search . '%')
+                ->orWhere('body', 'like', '%' . $search . '%')
+        );
 
         // above code is equivalent to this
         // if ($filters['search'] ?? false) {
@@ -29,7 +29,7 @@ class Post extends Model
         //         ->orWhere('body', 'like', '%' . $filters['search'] . '%');
         // }
 
-        $query->when($filters['category'] ?? false, function ($query, $category) {
+        $query->when($filters['category'] ?? false, fn($query, $category) =>
             $query
                 // ->whereExists(
                 //     fn($query) =>
@@ -40,15 +40,15 @@ class Post extends Model
                 // );
                 ->whereHas('category', fn($query) => // The 'category' refers to a relationship of the Post model, ie, line 47
                     $query->where('slug', $category) // find the category [of the posts] where the category.slug is equal to the slug entered in the query ($category) and return the posts of the category that was just found
-                ); // This is functionally equivalent to the above commented whereExists() query but shorter and easier to read
-        });
+                ) // This is functionally equivalent to the above commented whereExists() query but shorter and easier to read
+        );
 
-        $query->when($filters['author'] ?? false, function ($query, $author) { // only execute callback function if the condition/when is true
+        $query->when($filters['author'] ?? false, fn($query, $author) => // only execute callback function if the condition/when is true
             $query
                 ->whereHas('author', fn($query) =>
                     $query->where('username', $author)
-            );
-        });
+            )
+        );
     }
 
     public function category(): BelongsTo // Laravel assumes that the foreign key is called category_id which is deduced from the function name
