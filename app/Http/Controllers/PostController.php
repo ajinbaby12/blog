@@ -13,13 +13,12 @@ class PostController extends Controller
         // \Illuminate\Support\Facades\DB::listen(function ($query) {
         //     logger($query->sql, $query->bindings); // logs all queries in /storage/logs/laravel.log
         // });
-        $posts = Post::latest()->with('category', 'author');
-        // latest() orders the Post by it's created_at column
-        // Load all posts and all the categories and authors that are referenced by posts.
-        $posts->filter(request(['search'])); // request('search') returns a string of what is searched. request(['search]) returns an array with key 'search' and value of what is searched
         return view('posts', [
             // 'posts' => Post::all() // N+1 problem arises here
-            'posts' => $posts->get(),
+            'posts' => Post::latest()->with('category', 'author')->filter(request(['search']))->get(),
+            // latest() orders the Post by it's created_at column
+            // Load all posts and all the categories and authors that are referenced by posts.
+            // request('search') returns a string of what is searched. request(['search]) returns an array with key 'search' and value of what is searched
             'categories' => Category::all()
         ]);
     }
