@@ -12,7 +12,9 @@
                 <option value="category" disabled selected>Category
                 </option>
                 @foreach ($categories as $category)
-                <option value="/?category={{$category->slug}}">{{$category->name}}</option>
+                <option
+                    value="/?category={{$category->slug}}@if(request('search'))&search={{request('search')}} @endif">
+                    {{$category->name}}</option>
                 @endforeach
             </select>
 
@@ -31,14 +33,10 @@
         <div class="relative flex lg:inline-flex items-center bg-gray-100 rounded-xl px-3 py-2">
             <form method="GET" action="#">
                 @if (request('category'))
-                    <input type="hidden" name="category" value="{{request('category')}}">
+                <input type="hidden" name="category" value="{{request('category')}}">
                 @endif
-                <input
-                type="text"
-                name="search"
-                placeholder="Find something"
-                class="bg-transparent placeholder-black font-semibold text-sm"
-                value="{{request('search')}}">
+                <input type="text" name="search" placeholder="Find something"
+                    class="bg-transparent placeholder-black font-semibold text-sm" value="{{request('search')}}">
             </form>
         </div>
     </div>
