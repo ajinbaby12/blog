@@ -13,7 +13,7 @@ class PostController extends Controller
         // \Illuminate\Support\Facades\DB::listen(function ($query) {
         //     logger($query->sql, $query->bindings); // logs all queries in /storage/logs/laravel.log
         // });
-        return view('posts', [
+        return view('posts.index', [
             // 'posts' => Post::all() // N+1 problem arises here
             'posts' => Post::latest()->with('category', 'author')->filter(request(['search', 'category']))->get(),
             // Post::latest() = SELECT * FROM `posts` ORDER BY `created_at` DESC
@@ -27,7 +27,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('post', [
+        return view('posts.show', [
             'post' => $post
         ]);
     }
