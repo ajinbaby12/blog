@@ -12,8 +12,7 @@
                 <option value="category" disabled selected>Category
                 </option>
                 @foreach ($categories as $category)
-                <option
-                    value="/?category={{$category->slug}}@if(request('search'))&search={{request('search')}} @endif">
+                <option value="/?category={{$category->slug}}&{{ http_build_query(request()->except('category', 'page')) }}">
                     {{$category->name}}</option>
                 @endforeach
             </select>
@@ -34,6 +33,9 @@
             <form method="GET" action="#">
                 @if (request('category'))
                 <input type="hidden" name="category" value="{{request('category')}}">
+                @endif
+                @if (request('author'))
+                <input type="hidden" name="author" value="{{request('author')}}">
                 @endif
                 <input type="text" name="search" placeholder="Find something"
                     class="bg-transparent placeholder-black font-semibold text-sm" value="{{request('search')}}">
