@@ -13,9 +13,18 @@ class PostController extends Controller
         // \Illuminate\Support\Facades\DB::listen(function ($query) {
         //     logger($query->sql, $query->bindings); // logs all queries in /storage/logs/laravel.log
         // });
+        // return response()->json((Post::latest()
+        // ->with('category', 'author')
+        // ->filter(request(['search', 'category', 'author']))
+        // ->get()), 200, [], JSON_PRETTY_PRINT);
+        echo "hello";
         return view('posts.index', [
             // 'posts' => Post::all() // N+1 problem arises here
-            'posts' => Post::latest()->with('category', 'author')->filter(request(['search', 'category', 'author']))->get(), // filter() is defined in Post Model as scopeFilter()
+            'posts' => Post::latest()
+                ->with('category', 'author')
+                ->filter(request(['search', 'category', 'author']))
+                ->paginate(6),
+            // filter() is defined in Post Model as scopeFilter()
             // Post::latest() = SELECT * FROM `posts` ORDER BY `created_at` DESC
             // latest() orders the Post by it's created_at column
             // Load all posts and all the categories and authors that are referenced by posts.
