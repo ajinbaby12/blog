@@ -23,7 +23,9 @@ class RegisterController extends Controller
         ]);
         // control reaches here if all validation is passed. Else the register.create view is loaded again with the $errors variable passed to it
 
-        User::create($attributes);
+        $user = User::create($attributes);
+
+        auth()->login($user); // calling the login method with the user instance and logging an existing user instance
 
         // session()->flash('success', 'Your account has been created');
 
