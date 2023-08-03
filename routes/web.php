@@ -4,6 +4,7 @@
 // use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,6 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 //     ]);
 // });
 // This route functionality was also replaced by filter method in the Post controller
+
+Route::get('register', [RegisterController::class, 'create']);
+Route::post('register', [RegisterController::class, 'store']);
