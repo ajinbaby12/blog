@@ -2,6 +2,7 @@
 
 // use App\Models\Category;
 // use App\Models\User;
+use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\RegisterController;
 */
 
 Route::get('/', [PostController::class, 'index'])->name('home');
+Route::redirect('/home', '/');
 
 // Route::get('posts/{post:slug}', function (Post $post) {
 //     return view('post', [
@@ -42,5 +44,10 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']);
 // });
 // This route functionality was also replaced by filter method in the Post controller
 
-Route::get('register', [RegisterController::class, 'create']);
-Route::post('register', [RegisterController::class, 'store']);
+Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
+Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
+
+Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth');
+
+Route::get('login', [SessionController::class, 'create'])->middleware('guest');
+Route::post('session', [SessionController::class, 'store'])->middleware('guest');
