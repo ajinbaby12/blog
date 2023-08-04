@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class SessionController extends Controller
 {
@@ -10,6 +12,33 @@ class SessionController extends Controller
     {
         return view('session.create');
     }
+
+    public function store()
+    {
+        $attributes = request()->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required']
+        ]);
+
+        if (!auth()->attempt($attributes)) {
+            // auth failed
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'email' => 'Email or password is incorrect'
+                ]);
+
+            // throw ValidationException::withMessages([
+            //     'email' => 'Email or password is incorrect'
+            // ]); // functionally equivalent to the above return back()
+        }
+        // auth passed
+        // to prevent session fixation
+        session()->regenerate();
+        return redirect('/')->with('success', 'Welcome Back!');
+
+    }
+
     public function destroy()
     {
         auth()->logout();
