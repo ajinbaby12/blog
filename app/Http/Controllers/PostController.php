@@ -17,7 +17,7 @@ class PostController extends Controller
         // ->with('category', 'author')
         // ->filter(request(['search', 'category', 'author']))
         // ->get()), 200, [], JSON_PRETTY_PRINT);
-
+        
         return view('posts.index', [
             // 'posts' => Post::all() // N+1 problem arises here
             'posts' => Post::latest()

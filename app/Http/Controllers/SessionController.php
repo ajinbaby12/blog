@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-
 class SessionController extends Controller
 {
     public function create()
@@ -42,6 +38,8 @@ class SessionController extends Controller
     public function destroy()
     {
         auth()->logout();
+
+        session()->regenerate();
 
         return redirect('/')->with('success', "You have been logged out");
     }
