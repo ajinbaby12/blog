@@ -34,8 +34,12 @@ class Post extends Model
         // above code is equivalent to this
         // if ($filters['search'] ?? false) {
         //     $query
-        //         ->where('title', 'like', '%' . $filters['search'] . '%')
-        //         ->orWhere('body', 'like', '%' . $filters['search'] . '%');
+        //         ->where(
+        //             fn($query) =>
+        //             $query
+        //                 ->where('title', 'like', '%' . $filters['search'] . '%')
+        //                 ->orWhere('body', 'like', '%' . $filters['search'] . '%');
+        //         )
         // }
 
         $query->when(
