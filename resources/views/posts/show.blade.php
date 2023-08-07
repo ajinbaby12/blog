@@ -10,8 +10,8 @@
                         <time>{{ $post->created_at->diffForHumans() }}</time>
                     </p>
 
-                    <div class="flex items-center lg:justify-center text-sm mt-4">
-                        <img src="/images/lary-avatar.svg" alt="Lary avatar">
+                    <div class="flex items-center lg:justify-center text-sm mt-4" style="width: 50px;">
+                        <img src="https://avatar.iran.liara.run/public/?username={{ $post->author->username }}" alt="Larry avatar">
                         <div class="ml-3 text-left">
                             <h5 class="font-bold">
                                 <a href="/?author={{ $post->author->username }}">{{ $post->author->name }}</a>
@@ -50,10 +50,11 @@
                 </div>
 
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
-                    <x-post-comment />
-                    <x-post-comment />
-                    <x-post-comment />
-                    <x-post-comment />
+                    @include ('posts._add-comment-form')
+                    
+                    @foreach ($post->comments as $comment)
+                        <x-post-comment :comment="$comment" />
+                    @endforeach
                 </section>
             </article>
         </main>
