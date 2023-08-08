@@ -2,35 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use MailchimpMarketing\ApiClient;
+use App\Services\Newsletter;
+use Illuminate\Validation\ValidationException;
 
 class NewsletterController extends Controller
 {
-    public function test()
+    public function __invoke(Newsletter $newsletter)
     {
         request()->validate([
             'email' => 'required|email',
         ]);
 
-        $newsletter = new ApiClient();
-
-        $newsletter->setConfig([
-            'apiKey' => config('services.mailchimp.key'),
-            'server' => 'us12'
-        ]);
-
         try {
-            $newsletter->lists->addListMember("f52a440899", [
-                "email_address" => request('email'),
-                "status" => "subscribed",
-            ]);
+            $newsletter->subscribe(request('email'));
         } catch (\Exception $e) {
-            throw \Illuminate\Validation\ValidationException::withMessages([
+            throw ValidationException::withMessages([
                 'email' => 'The given email could not be added'
             ]);
         }
-
 
         return redirect('/')->with('success', 'You are now subscribed');
     }
