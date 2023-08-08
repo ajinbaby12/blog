@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\MailchimpNewsletter;
+use App\Services\Newsletter;
 use Illuminate\Validation\ValidationException;
 
 class NewsletterController extends Controller
 {
-    public function __invoke(MailchimpNewsletter $newsletter) // Laravel auto resolves and creates a Newsletter object which in turn depends on an ApiClient class
+    public function __invoke(Newsletter $newsletter) // Laravel auto resolves and creates a Newsletter object which in turn depends on an ApiClient class
     {
         request()->validate([
             'email' => 'required|email',
