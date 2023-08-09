@@ -27,10 +27,17 @@
                 @endguest
 
                 @auth
-                    <a href="#"
-                        class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
-                        {{ auth()->user()->name }} {{-- auth()->user() returns null if there is no authenticated user --}}
-                    </a>
+                    <div>
+                        <a href="#"
+                            class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
+                            {{ auth()->user()->name }} {{-- auth()->user() returns null if there is no authenticated user --}}
+                        </a>
+                    </div>
+                    <br>
+                    <div class="mt-3">
+                        <a href="/admin/posts/create" >Create a new Post</a>
+                    </div>
+
                 @endauth
             </div>
         </nav>

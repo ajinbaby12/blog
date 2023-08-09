@@ -53,7 +53,7 @@
                     @include ('posts._add-comment-form')
 
                     @foreach ($post->comments()->latest()->get() as $comment)
-                        <x-post-comment :comment="$comment" />
+                        <x-post-comment :comment=$comment />
                     @endforeach
                 </section>
             </article>
