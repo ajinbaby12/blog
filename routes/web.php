@@ -53,9 +53,6 @@ Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store
 // });
 // This route functionality was also replaced by filter method in the Post controller
 
-Route::get('admin/posts/create', [PostController::class, 'create'])->middleware('admin');
-Route::post('admin/posts', [PostController::class, 'store'])->middleware('admin');
-
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
 
@@ -65,3 +62,11 @@ Route::get('login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('login', [SessionController::class, 'store'])->middleware('guest');
 
 Route::post('newsletter', NewsletterController::class);
+
+// Admin
+Route::post('admin/posts', [AdminPostController::class, 'store'])->middleware('admin');
+Route::get('admin/posts/create', [AdminPostController::class, 'create'])->middleware('admin');
+Route::get('admin/posts', [AdminPostController::class, 'index'])->middleware('admin');
+Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admin');
+Route::patch('admin/posts/{post}', [AdminPostController::class, 'update'])->middleware('admin');
+Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('admin');
