@@ -64,9 +64,15 @@ Route::post('login', [SessionController::class, 'store'])->middleware('guest');
 Route::post('newsletter', NewsletterController::class);
 
 // Admin
-Route::post('admin/posts', [AdminPostController::class, 'store'])->middleware('can:admin');
-Route::get('admin/posts/create', [AdminPostController::class, 'create'])->middleware('can:admin');
-Route::get('admin/posts', [AdminPostController::class, 'index'])->middleware('can:admin');
-Route::get('admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('can:admin');
-Route::patch('admin/posts/{post}', [AdminPostController::class, 'update'])->middleware('can:admin');
-Route::delete('admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('can:admin');
+Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function () {
+
+    Route::resource('posts', AdminPostController::class)->except('show');
+
+    // Route::post('posts', [AdminPostController::class, 'store']);
+    // Route::get('posts/create', [AdminPostController::class, 'create']);
+    // Route::get('posts', [AdminPostController::class, 'index']);
+    // Route::get('posts/{post}/edit', [AdminPostController::class, 'edit']);
+    // Route::patch('posts/{post}', [AdminPostController::class, 'update']);
+    // Route::delete('posts/{post}', [AdminPostController::class, 'destroy']);
+});
+// can:admin applies the admin Gate as a middleware
