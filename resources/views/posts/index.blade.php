@@ -9,6 +9,5 @@
         @else
             <p>No posts yet</p>
         @endif
-
     </main>
 </x-layout>

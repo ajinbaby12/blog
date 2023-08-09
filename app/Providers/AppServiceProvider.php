@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\Newsletter;
+use Illuminate\Support\Facades\Blade;
 use MailchimpMarketing\ApiClient;
 use App\Services\MailchimpNewsletter;
 use Illuminate\Database\Eloquent\Model;
@@ -39,5 +40,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Model::unguard();
+
+        Blade::if('admin', function () {
+            return request()->user()?->can('admin');
+        });
     }
 }
