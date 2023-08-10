@@ -37,6 +37,11 @@
                             Back to Posts
                         </a>
 
+
+                        <div class="space-x-2">
+                            <a href="/admin/posts/{{ $post->id }}/edit">Edit the note</a>
+                        </div>
+
                         <div class="space-x-2">
                             <x-category-button :category="$post->category"/>
                         </div>

@@ -36,9 +36,9 @@ class AdminPostController extends Controller
 
     public function update(Post $post)
     {
-        $attributes = $this->validatePost($post);
-
-        $post->update($attributes);
+        $post->update(array_merge($this->validatePost($post), [
+            'user_id' => request('user_id')
+        ]));
 
         return back()->with('success', 'Post Updated!');
     }
