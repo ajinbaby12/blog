@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 
 class AdminPostController extends Controller
@@ -10,7 +11,7 @@ class AdminPostController extends Controller
     public function index()
     {
         return view('admin.posts.index', [
-            'posts' => Post::paginate(50)
+            'posts' => Post::latest()->paginate(50)
         ]);
     }
 
@@ -23,7 +24,6 @@ class AdminPostController extends Controller
     {
         Post::create(array_merge($this->validatePost(), [
             'user_id' => request()->user()->id,
-            'thumbnail' => request()->file('thumbnail')->store('thumbnails')
         ]));
 
         return redirect('/');
@@ -38,10 +38,6 @@ class AdminPostController extends Controller
     {
         $attributes = $this->validatePost($post);
 
-        if ($attributes['thumbnail'] ?? false) {
-            $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
-        }
-
         $post->update($attributes);
 
         return back()->with('success', 'Post Updated!');
@@ -54,18 +50,30 @@ class AdminPostController extends Controller
         return back()->with('success', 'Post Deleted!');
     }
 
-    protected function validatePost(?Post $post = null): array
+    public function changeStatus()
+    {
+        $postId = $_POST['postId'];
+        $newStatus = $_POST['statusDropdown'];
+
+        $post = Post::find($postId);
+        if ($post) {
+            $post->update(['status' => $newStatus]);
+
+        }
+        return back();
+    }
+
+    protected function validatePost(Post $post = null): array
     {
         $post ??= new Post();
 
         return request()->validate([
             'title' => 'required',
-            'thumbnail' => $post->exists ? ['image'] : ['required', 'image'],
             'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
             'excerpt' => 'required',
             'body' => 'required',
             'category_id' => ['required', Rule::exists('categories', 'id')],
-            'published_at' => 'required'
+            'status' => 'required'
         ]);
     }
 }

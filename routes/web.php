@@ -53,6 +53,7 @@ Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store
 // });
 // This route functionality was also replaced by filter method in the Post controller
 
+
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
 

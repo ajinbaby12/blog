@@ -22,9 +22,10 @@ class PostController extends Controller
         return view('posts.index', [
             // 'posts' => Post::all() // N+1 problem arises here
             'posts' => Post::latest()
-                ->with('category', 'author')
-                ->filter(request(['search', 'category', 'author']))
-                ->paginate(6)->withQueryString(),
+            ->where('status', 'published')
+            ->with('category', 'author')
+            ->filter(request(['search', 'category', 'author']))
+            ->paginate(6)->withQueryString(),
             // filter() is defined in Post Model as scopeFilter()
             // Post::latest() = SELECT * FROM `posts` ORDER BY `created_at` DESC
             // latest() orders the Post by it's created_at column

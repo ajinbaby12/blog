@@ -33,6 +33,15 @@
                 <x-form.error name="category" />
             </x-form.field>
 
+            <x-form.field>
+                <x-form.label name="Status" />
+                <select id="status" name="status">
+                    <option value="published" {{ $post->status === 'published' ? 'selected' : '' }}>Published
+                    </option>
+                    <option value="draft" {{ $post->status === 'draft' ? 'selected' : '' }}>Draft</option>
+                </select>
+            </x-form.field>
+
             <x-form.button>Update</x-form.button>
         </form>
     </x-setting>
