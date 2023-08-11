@@ -48,24 +48,39 @@ class PostController extends Controller
         return view('posts.create');
     }
 
+    public function edit(Post $post)
+    {
+        return view('posts.edit', [
+            'post' => $post
+        ]);
+    }
+
     public function store()
     {
-        Post::create(
-            array_merge(
-                request()->validate([
-                    'title' => 'required',
-                    'slug' => ['required', Rule::unique('posts', 'slug')],
-                    'excerpt' => 'required',
-                    'body' => 'required',
-                    'category_id' => ['required', Rule::exists('categories', 'id')],
-                    'status' => 'required'
-                ]),
-                [
-                    'user_id' => request()->user()->id
-                ]
-            )
-        );
-
+        Post::create(array_merge($this->validatePost(), [
+            'user_id' => request()->user()->id,
+        ]));
         return redirect('/');
+    }
+
+    public function update(Post $post)
+    {
+        $post->update($this->validatePost($post));
+
+        return back()->with('success', 'Post Updated!');
+    }
+
+    protected function validatePost(Post $post = null): array
+    {
+        $post ??= new Post();
+
+        return request()->validate([
+            'title' => 'required',
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post)],
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+            'status' => 'required'
+        ]);
     }
 }

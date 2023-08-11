@@ -35,8 +35,14 @@ Route::redirect('/home', '/');
 //     ]);
 // });
 
-Route::get('posts/create', [PostController::class, 'create'])->middleware('auth');
-Route::post('posts', [PostController::class, 'store'])->middleware('auth');
+Route::middleware('auth')->group(function () {
+
+    Route::post('posts', [PostController::class, 'store']);
+    Route::get('posts/create', [PostController::class, 'create']);
+    Route::get('posts/{post}/edit', [PostController::class, 'edit']);
+    Route::patch('posts/{post}', [PostController::class, 'update']);
+});
+
 
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
