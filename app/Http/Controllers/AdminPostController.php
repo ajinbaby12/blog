@@ -15,19 +15,14 @@ class AdminPostController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return view('admin.posts.create');
-    }
+    // public function store()
+    // {
+    //     Post::create(array_merge($this->validatePost(), [
+    //         'user_id' => request()->user()->id,
+    //     ]));
 
-    public function store()
-    {
-        Post::create(array_merge($this->validatePost(), [
-            'user_id' => request()->user()->id,
-        ]));
-
-        return redirect('/');
-    }
+    //     return redirect('/');
+    // }
 
     public function edit(Post $post)
     {

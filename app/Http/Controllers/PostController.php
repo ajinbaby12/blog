@@ -22,10 +22,10 @@ class PostController extends Controller
         return view('posts.index', [
             // 'posts' => Post::all() // N+1 problem arises here
             'posts' => Post::latest()
-            ->where('status', 'published')
-            ->with('category', 'author')
-            ->filter(request(['search', 'category', 'author']))
-            ->paginate(6)->withQueryString(),
+                ->where('status', 'published')
+                ->with('category', 'author')
+                ->filter(request(['search', 'category', 'author']))
+                ->paginate(6)->withQueryString(),
             // filter() is defined in Post Model as scopeFilter()
             // Post::latest() = SELECT * FROM `posts` ORDER BY `created_at` DESC
             // latest() orders the Post by it's created_at column
@@ -41,5 +41,31 @@ class PostController extends Controller
         return view('posts.show', [
             'post' => $post,
         ]);
+    }
+
+    public function create()
+    {
+        return view('posts.create');
+    }
+
+    public function store()
+    {
+        Post::create(
+            array_merge(
+                request()->validate([
+                    'title' => 'required',
+                    'slug' => ['required', Rule::unique('posts', 'slug')],
+                    'excerpt' => 'required',
+                    'body' => 'required',
+                    'category_id' => ['required', Rule::exists('categories', 'id')],
+                    'status' => 'required'
+                ]),
+                [
+                    'user_id' => request()->user()->id
+                ]
+            )
+        );
+
+        return redirect('/');
     }
 }

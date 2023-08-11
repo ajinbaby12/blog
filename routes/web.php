@@ -34,6 +34,10 @@ Route::redirect('/home', '/');
 //         'post' => $post
 //     ]);
 // });
+
+Route::get('posts/create', [PostController::class, 'create'])->middleware('auth');
+Route::post('posts', [PostController::class, 'store'])->middleware('auth');
+
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 
 Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
@@ -70,7 +74,7 @@ Route::get('feed', RssFeedController::class);
 // Admin
 Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function () {
 
-    Route::resource('posts', AdminPostController::class)->except('show');
+    Route::resource('posts', AdminPostController::class)->except(['show', 'create', 'store']);
 
     // Route::post('posts', [AdminPostController::class, 'store']);
     // Route::get('posts/create', [AdminPostController::class, 'create']);
