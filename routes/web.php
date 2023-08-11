@@ -2,6 +2,7 @@
 
 // use App\Models\Category;
 // use App\Models\User;
+use App\Http\Controllers\RssFeedController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SessionController;
@@ -63,6 +64,8 @@ Route::get('login', [SessionController::class, 'create'])->middleware('guest');
 Route::post('login', [SessionController::class, 'store'])->middleware('guest');
 
 Route::post('newsletter', NewsletterController::class);
+
+Route::get('feed', RssFeedController::class);
 
 // Admin
 Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function () {
