@@ -38,6 +38,12 @@
                 <div class="d-flex justify-content-between align-items-center mt-4 px-4 space-x-3">
 
                     <div class="stats">
+                        <h6 class="mb-0">Following</h6>
+                        <span>{{ count($author->follows) }}</span>
+
+                    </div>
+
+                    <div class="stats">
                         <h6 class="mb-0">Followers</h6>
                         <span>{{ count($author->followers) }}</span>
 

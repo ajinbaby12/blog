@@ -38,13 +38,11 @@
                             Back to Posts
                         </a>
 
-                        @admin
+                        @if (auth()->user()->username === 'ajin_baby')
                             <div class="space-x-2">
                                 <a href="/admin/posts/{{ $post->id }}/edit">Edit the note</a>
                             </div>
-                        @endadmin
-
-                        @if ($post->author->id == auth()->id())
+                        @elseif ($post->author->id == auth()->id())
                             <div class="space-x-2">
                                 <a href="/posts/{{ $post->id }}/edit">Edit the note</a>
                             </div>

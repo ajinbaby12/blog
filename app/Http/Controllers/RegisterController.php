@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RegistrationSuccessful;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 
@@ -28,6 +29,8 @@ class RegisterController extends Controller
         auth()->login($user); // calling the login method with the user instance and logging an existing user instance
 
         // session()->flash('success', 'Your account has been created');
+
+        RegistrationSuccessful::dispatch($user);
 
         return redirect('/')->with('success', 'Your account has been created'); // redirect to the homepage 'with' the key value pairs flashed to the session
     }
