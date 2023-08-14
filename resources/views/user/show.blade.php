@@ -21,20 +21,19 @@
             <div class="mt-5 text-center">
 
                 <h4 class="mb-0">{{ $author->name }}</h4>
-                <span class="text-muted d-block mb-2">Los Angles</span>
 
-                <form action="/author/{{ $author->id }}/follow" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-primary btn-sm follow">Follow</button>
-                </form>
+                @if (auth()->id() !== $author->id)
+                    <form action="/author/{{ $author->id }}/follow" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary btn-sm follow">Follow</button>
+                    </form>
 
-                <form action="{{ route('unfollow.author', $author) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Unfollow</button>
-                </form>
-
-
+                    <form action="{{ route('unfollow.author', $author) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Unfollow</button>
+                    </form>
+                @endif
 
                 <div class="d-flex justify-content-between align-items-center mt-4 px-4 space-x-3">
 
@@ -46,7 +45,7 @@
 
 
                     <div class="stats">
-                        <h6 class="mb-0"><a href="/?author={{$author->username}}">Posts</a></h6>
+                        <h6 class="mb-0"><a href="/?author={{ $author->username }}">Posts</a></h6>
                         <span>{{ count($author->posts) }}</span>
 
                     </div>

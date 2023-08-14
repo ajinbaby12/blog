@@ -17,14 +17,20 @@ class UserController extends Controller
     public function followAuthor(Request $request, User $author)
     {
         $user = request()->user();
-        $user->follows()->attach($author->id);
-        return redirect()->back();
+
+        if ($user->id !== $author->id) { // if author and user is different
+            $user->follows()->attach($author->id);
+            return redirect()->back();
+        }
     }
 
     public function unfollowAuthor(Request $request, User $author)
     {
-        $user = auth()->user();
-        $user->follows()->detach($author->id);
-        return redirect()->back();
+        $user = request()->user();
+
+        if ($user->id !== $author->id) {
+            $user->follows()->detach($author->id);
+            return redirect()->back();
+        }
     }
 }
