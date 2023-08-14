@@ -2,9 +2,10 @@
 
 // use App\Models\Category;
 // use App\Models\User;
-use App\Http\Controllers\RssFeedController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RssFeedController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminPostController;
@@ -70,12 +71,16 @@ Route::post('register', [RegisterController::class, 'store'])->middleware('guest
 
 Route::post('logout', [SessionController::class, 'destroy'])->middleware('auth');
 
-Route::get('login', [SessionController::class, 'create'])->middleware('guest');
-Route::post('login', [SessionController::class, 'store'])->middleware('guest');
+Route::get('login', [SessionController::class, 'create'])->middleware('guest')->name('login');
+Route::post('login', [SessionController::class, 'store'])->middleware('guest')->name('login');
 
 Route::post('newsletter', NewsletterController::class);
 
 Route::get('feed', RssFeedController::class);
+
+Route::get('author/{author:username}', [UserController::class, 'show']);
+Route::post('/author/{author}/follow', [UserController::class, 'followAuthor'])->middleware('auth');
+Route::delete('/author/{author}/unfollow', [UserController::class, 'unfollowAuthor'])->name('unfollow.author')->middleware('auth');
 
 // Admin
 Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function () {

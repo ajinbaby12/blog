@@ -55,6 +55,16 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function follows()
+    {
+        return $this->belongsToMany(User::class, 'followed_authors', 'user_id', 'author_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followed_authors', 'author_id', 'user_id');
+    }
+
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
