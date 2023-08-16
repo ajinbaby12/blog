@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
+use App\Providers\PublishedPost;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rule;
 
@@ -57,9 +58,12 @@ class PostController extends Controller
 
     public function store()
     {
-        Post::create(array_merge($this->validatePost(), [
+        $user = Post::create(array_merge($this->validatePost(), [
             'user_id' => request()->user()->id,
         ]));
+
+        PublishedPost::dispatch($user->user_id);
+
         return redirect('/');
     }
 

@@ -53,7 +53,6 @@
                     <div class="stats">
                         <h6 class="mb-0"><a href="/?author={{ $author->username }}">Posts</a></h6>
                         <span>{{ count($author->posts) }}</span>
-
                     </div>
 
                 </div>

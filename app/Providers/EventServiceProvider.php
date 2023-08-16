@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Events\RegistrationSuccessful;
 use App\Listeners\SubscribeUserToMailchimp;
+use App\Providers\PublishedPost;
+use App\Providers\SendEmailToFollowers;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -24,7 +26,11 @@ class EventServiceProvider extends ServiceProvider
         RegistrationSuccessful::class => [
             SubscribeUserToMailchimp::class,
         ],
-        
+
+        PublishedPost::class => [
+            SendEmailToFollowers::class,
+        ],
+
     ];
 
     /**
