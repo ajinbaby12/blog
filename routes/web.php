@@ -78,9 +78,9 @@ Route::post('newsletter', NewsletterController::class);
 
 Route::get('feed', RssFeedController::class);
 
-Route::get('author/{author:username}', [UserController::class, 'show']);
-Route::post('/author/{author}/follow', [UserController::class, 'followAuthor'])->middleware('auth');
-Route::delete('/author/{author}/unfollow', [UserController::class, 'unfollowAuthor'])->name('unfollow.author')->middleware('auth');
+Route::get('profile/{author:username}', [UserController::class, 'show']);
+Route::post('profile/{author}/follow', [UserController::class, 'followAuthor'])->middleware('auth');
+Route::delete('profile/{author}/unfollow', [UserController::class, 'unfollowAuthor'])->name('unfollow.author')->middleware('auth');
 
 // Admin
 Route::prefix('admin')->middleware('can:admin')->name('admin.')->group(function () {

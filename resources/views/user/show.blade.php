@@ -23,7 +23,7 @@
                 <h4 class="mb-0">{{ $author->name }}</h4>
 
                 @if (auth()->id() !== $author->id)
-                    <form action="/author/{{ $author->id }}/follow" method="POST">
+                    <form action="/profile/{{ $author->id }}/follow" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-primary btn-sm follow">Follow</button>
                     </form>

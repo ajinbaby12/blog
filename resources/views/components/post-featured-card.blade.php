@@ -35,7 +35,7 @@
                     <img src="https://avatar.iran.liara.run/public/?username={{ $post->author->username }}" alt="Lary avatar" style="width: 50px;>
                     <div class="ml-3">
                         <h5 class="font-bold">
-                            <a href="/author/{{ $post->author->username }}">{{ $post->author->name }}</a>
+                            <a href="/profile/{{ $post->author->username }}">{{ $post->author->name }}</a>
                         </h5>
                     </div>
                 </div>
