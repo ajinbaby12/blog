@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -12,6 +13,24 @@ class UserController extends Controller
         return view('user.show', [
             'author' => $author
         ]);
+    }
+
+    public function edit(User $author)
+    {
+        return view('user.edit', [
+            'user' => $author
+        ]);
+    }
+
+    public function update(User $author)
+    {
+        $attributes = request()->validate([
+            'username' => ['required', 'min:7', 'max:255']
+        ]);
+
+        $author = tap($author)->update($attributes);
+
+        return redirect('/profile/' . $author->username . '/edit')->with('success', 'Account Updated!');
     }
 
     public function followAuthor(Request $request, User $author)

@@ -46,8 +46,9 @@
                         @endadmin
                         {{-- @endcan --}}
                         {{-- @endif --}}
-                        <x-dropdown-item href="/posts/create" :active="request()->is('/posts/create')">New Post</x-dropdown-item>
 
+                        <x-dropdown-item href="/profile/{{ auth()->user()->username }}/edit" :active="request()->is('/profile/{{ auth()->user()->username }}/edit')">Edit Profile</x-dropdown-item>
+                        <x-dropdown-item href="/posts/create" :active="request()->is('/posts/create')">New Post</x-dropdown-item>
                         <x-dropdown-item href="#" x-data="{}"
                             @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
 

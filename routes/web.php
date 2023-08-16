@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('posts/create', [PostController::class, 'create']);
     Route::get('posts/{post}/edit', [PostController::class, 'edit']);
     Route::patch('posts/{post}', [PostController::class, 'update']);
+
+
 });
 
 
@@ -79,6 +81,9 @@ Route::post('newsletter', NewsletterController::class);
 Route::get('feed', RssFeedController::class);
 
 Route::get('profile/{author:username}', [UserController::class, 'show']);
+Route::get('profile/{author:username}/edit', [UserController::class, 'edit'])->middleware('auth');
+Route::patch('profile/{author}', [UserController::class, 'update'])->middleware('auth');
+
 Route::post('profile/{author}/follow', [UserController::class, 'followAuthor'])->middleware('auth');
 Route::delete('profile/{author}/unfollow', [UserController::class, 'unfollowAuthor'])->name('unfollow.author')->middleware('auth');
 
