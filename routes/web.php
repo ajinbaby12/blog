@@ -81,7 +81,7 @@ Route::post('newsletter', NewsletterController::class);
 Route::get('feed', RssFeedController::class);
 
 Route::get('profile/{author:username}', [UserController::class, 'show']);
-Route::get('profile/{author:username}/edit', [UserController::class, 'edit'])->middleware('auth');
+Route::get('profile/{author:username}/edit', [UserController::class, 'edit'])->middleware('can:owner');
 Route::patch('profile/{author}', [UserController::class, 'update'])->middleware('auth');
 
 Route::post('profile/{author}/follow', [UserController::class, 'followAuthor'])->middleware('auth');

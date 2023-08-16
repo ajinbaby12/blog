@@ -29,5 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin', function (User $user) { // $user is the currently signed in user which is passed automatically
             return $user->username === 'ajin_baby';
         });
+
+        Gate::define('owner', function (User $user) {
+            return $user->username === explode('/', request()->path())[1];
+        });
     }
 }
