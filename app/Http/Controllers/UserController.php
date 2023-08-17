@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -17,6 +18,7 @@ class UserController extends Controller
 
     public function edit(User $author)
     {
+        Gate::authorize('view', $author);
         return view('user.edit', [
             'user' => $author
         ]);
@@ -24,6 +26,7 @@ class UserController extends Controller
 
     public function update(User $author)
     {
+        Gate::authorize('update', $author);
         $attributes = request()->validate([
             'username' => ['required', 'min:7', 'max:255']
         ]);
