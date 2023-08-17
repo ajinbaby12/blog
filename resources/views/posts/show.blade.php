@@ -60,6 +60,10 @@
                     <div class="space-y-4 lg:text-lg leading-loose">{!! $post->body !!}</div>
                 </div>
 
+                <div class="panel-footer">
+                    Views: {{ $post->view_count }}
+                </div>
+
                 <section class="col-span-8 col-start-5 mt-10 space-y-6">
                     @include ('posts._add-comment-form')
 
