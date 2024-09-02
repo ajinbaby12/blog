@@ -22,7 +22,7 @@ class CreatePostsTable extends Migration
             $table->text('excerpt');
             $table->text('body');
             $table->string('status');
-            $table->unsignedBigInteger('view_count');
+            $table->unsignedBigInteger('view_count')->default(0);
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });

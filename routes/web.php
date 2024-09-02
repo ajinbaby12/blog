@@ -46,6 +46,9 @@ Route::middleware('auth')->group(function () {
 
 });
 
+Route::get('/token', function () {
+    return csrf_token(); 
+});
 
 Route::get('posts/{post:slug}', [PostController::class, 'show']);
 

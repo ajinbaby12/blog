@@ -35,7 +35,7 @@ class SubscribeUserToMailchimp
         $client = new ApiClient();
         $client->setConfig([
             'apiKey' => $this->key,
-            'server' => 'us12',
+            'server' => 'us17',
         ]);
 
         $client->lists->addListMember($this->listId, [

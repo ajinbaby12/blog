@@ -71,7 +71,9 @@ class PostController extends Controller
 
     public function update(Post $post)
     {
+        \DB::beginTransaction();
         $post->update($this->validatePost($post));
+        \DB::commit();
 
         return back()->with('success', 'Post Updated!');
     }
