@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
-use App\Providers\PublishedPost;
+use App\Events\PublishedPost;
 use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rule;
 

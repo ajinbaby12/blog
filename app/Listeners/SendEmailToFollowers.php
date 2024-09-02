@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Providers;
+namespace App\Listeners;
 
-use App\Providers\PublishedPost;
+use App\Events\PublishedPost;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -21,7 +21,7 @@ class SendEmailToFollowers
     /**
      * Handle the event.
      *
-     * @param  \App\Providers\PublishedPost  $event
+     * @param  \App\Events\PublishedPost  $event
      * @return void
      */
     public function handle(PublishedPost $event)
